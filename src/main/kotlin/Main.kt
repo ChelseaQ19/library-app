@@ -1,25 +1,31 @@
 package ie.setu
 
+import java.lang.System.exit
+
+fun main() {
+    runMenu()
+}
+
 fun mainMenu() : Int {
-    println("")
-    println("--------------------")
-    println("LIBRARY MANAGEMENT APP")
-    println("--------------------")
-    println("LIBRARY MENU")
-    println("  1) Add a book")
-    println("  2) List all books")
-    println("  3) Update a book")
-    println("  4) Delete a book")
-    println("  5) Add a Novel")
-    println("  6) List all Novels ")
-    println("  7) Update a novel")
-    println("  8) Delete a novel")
-    println("  9) Add a location")
-    println("  10) List all locations")
-    println("--------------------")
-    println("  0) Exit")
-    println("--------------------")
-    print("==>> ")
+    print("""
+          ----------------------------------
+          |        LIBRARY MANAGEMENT APP         |
+          ----------------------------------
+          | LIBRARY MENU                      |
+          |   1) Add a book                |
+          |   2) List all books            |
+          |   3) Update a book             |
+          |   4) Delete a book             |
+          |   5) Add a novel                |
+          |   6) List all novels           |
+          |   7) Update a novel             |
+          |   8) Delete a novel             |
+          |   9) Add location             |
+          |   10) List all locations             |
+          ----------------------------------
+          |   0) Exit                      |
+          ----------------------------------
+          ==>> """)
     return readlnOrNull()?.toIntOrNull() ?: -1
 }
 //creating menu for library management system
@@ -31,7 +37,7 @@ fun runMenu() {
             2  -> listBooks()
             3  -> updateBook()
             4  -> deleteBook()
-            5  -> addNovel()
+            5  -> addnovel()
             6  -> listNovels()
             7  -> updateNovel()
             8  -> deleteNovel()
