@@ -8,24 +8,24 @@ fun main() {
 
 fun mainMenu() : Int {
     print("""
-          ----------------------------------
-          |        LIBRARY MANAGEMENT APP         |
-          ----------------------------------
-          | LIBRARY MENU                      |
-          |   1) Add a book                |
-          |   2) List all books            |
-          |   3) Update a book             |
-          |   4) Delete a book             |
-          |   5) Add a novel                |
-          |   6) List all novels           |
-          |   7) Update a novel             |
-          |   8) Delete a novel             |
-          |   9) Add location             |
-          |   10) List all locations             |
-          ----------------------------------
-          |   0) Exit                      |
-          ----------------------------------
-          ==>> """)
+    > ----------------------------------
+    > |    LIBRARY MANAGEMENT APP      |
+    > ----------------------------------
+    > | LIBRARY MENU                   |
+    > |   1) Add a book                |
+    > |   2) List all books            |
+    > |   3) Update a book             |
+    > |   4) Delete a book             |
+    > |   5) Add a novel               |
+    > |   6) List all novels           |
+    > |   7) Update a novel            |
+    > |   8) Delete a novel            |
+    > |   9) Add location              |
+    > |   10) List all locations       |
+    > ----------------------------------
+    > |   0) Exit                      |
+    > ----------------------------------
+    ==>> """.trimMargin(">"))
     return readlnOrNull()?.toIntOrNull() ?: -1
 }
 //creating menu for library management system
@@ -44,49 +44,49 @@ fun runMenu() {
             9  -> addLocation()
             10 -> listLocations()
             0  -> exitApp()
-            else -> println("Invalid option entered: " + option)
+            else -> println("Invalid option entered: ${option}")
         }
     } while (true)
 }
 //creating corresponding calls for functions above
 fun addBook(){
-    println("You chose Add Note")
+    println("You chose Add Book")
 }
 
 fun listBooks(){
-    println("You chose List Notes")
+    println("You chose List Books")
 }
 
 fun updateBook(){
-    println("You chose Update Note")
+    println("You chose Update Book")
 }
 
 fun deleteBook(){
-    println("You chose Delete Note")
+    println("You chose Delete Book")
 }
 
 fun addnovel(){
-    println("You chose Add Note")
+    println("You chose Add Novel")
 }
 
 fun listNovels(){
-    println("You chose List Notes")
+    println("You chose List Novels")
 }
 
 fun updateNovel(){
-    println("You chose Update Note")
+    println("You chose Update Novel")
 }
 
 fun deleteNovel(){
-    println("You chose Delete Note")
+    println("You chose Delete Novel")
 }
 
 fun addLocation(){
-    println("You chose Update Note")
+    println("You chose Add Location")
 }
 
 fun listLocations(){
-    println("You chose Delete Note")
+    println("You chose List Locations")
 }
 
 fun exitApp(){
