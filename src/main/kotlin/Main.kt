@@ -1,6 +1,9 @@
 package ie.setu
 
+
 import java.lang.System.exit
+import ie.setu.utils.readIntNotNull
+import ie.setu.utils.readNextInt
 
 fun main() {
     runMenu()
@@ -26,7 +29,7 @@ fun mainMenu() : Int {
     > |   0) Exit                      |
     > ----------------------------------
     ==>> """.trimMargin(">"))
-    return readlnOrNull()?.toIntOrNull() ?: -1
+    return readNextInt(" > ==>>")
 }
 //creating menu for library management system
 fun runMenu() {
