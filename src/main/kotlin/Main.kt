@@ -1,9 +1,12 @@
 package ie.setu
 
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import java.lang.System.exit
 import ie.setu.utils.readIntNotNull
 import ie.setu.utils.readNextInt
+
+private val logger = KotlinLogging.logger {}
 
 fun main() {
     runMenu()
@@ -53,43 +56,43 @@ fun runMenu() {
 }
 //creating corresponding calls for functions above
 fun addBook(){
-    println("You chose Add Book")
+    logger.info { "addBook() function invoked" }
 }
 
 fun listBooks(){
-    println("You chose List Books")
+    logger.info { "listBooks() function invoked" }
 }
 
 fun updateBook(){
-    println("You chose Update Book")
+    logger.info { "updateBook() function invoked" }
 }
 
 fun deleteBook(){
-    println("You chose Delete Book")
+    logger.info { "deleteBook() function invoked" }
 }
 
 fun addnovel(){
-    println("You chose Add Novel")
+    logger.info { "addNovel() function invoked" }
 }
 
 fun listNovels(){
-    println("You chose List Novels")
+    logger.info { "listNovels() function invoked" }
 }
 
 fun updateNovel(){
-    println("You chose Update Novel")
+    logger.info { "updateNovel() function invoked" }
 }
 
 fun deleteNovel(){
-    println("You chose Delete Novel")
+    logger.info { "deleteNovel() function invoked" }
 }
 
 fun addLocation(){
-    println("You chose Add Location")
+    logger.info { "addLocation() function invoked"}
 }
 
 fun listLocations(){
-    println("You chose List Locations")
+    logger.info {"listLocations() function invoked"}
 }
 
 fun exitApp(){
