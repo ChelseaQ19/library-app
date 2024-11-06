@@ -13,6 +13,17 @@ fun readNextInt(prompt: String?): Int {
     } while (true)
 }
 
+fun readNextDouble(prompt: String?): Double { // adding a double for the ISBN.
+    do {
+        try {
+            print(prompt)
+            return readln().toDouble()
+        } catch (e: NumberFormatException) {
+            System.err.println("\tEnter a number please.")
+        }
+    } while (true)
+}
+
 fun readNextLine(prompt: String?): String {
     print(prompt)
     return readln()
