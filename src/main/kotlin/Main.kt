@@ -1,12 +1,22 @@
 package ie.setu
 
-
+import ie.setu.controllers.BookAPI
+import ie.setu.controllers.LocationAPI
+import ie.setu.controllers.NovelAPI
+import ie.setu.models.Book
+import ie.setu.models.Novel
+import ie.setu.models.Location
 import io.github.oshai.kotlinlogging.KotlinLogging
 import java.lang.System.exit
 import ie.setu.utils.readIntNotNull
 import ie.setu.utils.readNextInt
+import ie.setu.utils.readNextDouble
+import ie.setu.utils.readNextLine
 
 private val logger = KotlinLogging.logger {}
+private val bookAPI = BookAPI()
+private val novelAPI = NovelAPI()
+private val locationAPI = LocationAPI()
 
 fun main() {
     runMenu()
@@ -43,7 +53,7 @@ fun runMenu() {
             2  -> listBooks()
             3  -> updateBook()
             4  -> deleteBook()
-            5  -> addnovel()
+            5  -> addNovel()
             6  -> listNovels()
             7  -> updateNovel()
             8  -> deleteNovel()
@@ -56,11 +66,24 @@ fun runMenu() {
 }
 //creating corresponding calls for functions above
 fun addBook(){
-    logger.info { "addBook() function invoked" }
+    val bookAuthor = readNextLine("Enter the author of the book: ")
+    val bookISBN = readNextLine("Enter the ISBN of the book: ")
+    val bookTitle = readNextLine("Enter the title of the book:")
+    val bookPrice = readNextDouble("Enter the price of the book:")
+    val bookPages = readNextInt("Enter the number of pages for the book:")
+    val bookGenre = readNextLine("Enter the genre of the book:")
+    val bookLanguage = readNextLine("Enter the language of the book:")
+    val isAdded = bookAPI.add(Book(bookAuthor, bookISBN, bookTitle, bookPrice, bookPages, bookGenre, bookLanguage, false))
+
+    if (isAdded) {
+        println("Added Successfully to library")
+    } else {
+        println("Add Failed to library")
+    }
 }
 
 fun listBooks(){
-    logger.info { "listBooks() function invoked" }
+    println(bookAPI.listAllBooks())
 }
 
 fun updateBook(){
@@ -71,12 +94,24 @@ fun deleteBook(){
     logger.info { "deleteBook() function invoked" }
 }
 
-fun addnovel(){
-    logger.info { "addNovel() function invoked" }
+fun addNovel(){
+    val novelTitle = readNextLine("Enter the title of the novel: ")
+    val novelAuthor = readNextLine("Enter the author of the novel: ")
+    val novelGenre = readNextLine("Enter the genre of the novel:")
+    val novelPages = readNextInt("Enter the number of pages for the novel:")
+    val novelPrice = readNextDouble("Enter the price of the novel:")
+    val novelLanguage = readNextLine("Enter the language of the novel:")
+    val isAdded = novelAPI.add(Novel(novelTitle, novelAuthor, novelGenre, novelPages, novelPrice, novelLanguage, false))
+
+    if (isAdded) {
+        println("Added Successfully to library")
+    } else {
+        println("Add Failed to library")
+    }
 }
 
 fun listNovels(){
-    logger.info { "listNovels() function invoked" }
+    println(novelAPI.listAllNovels())
 }
 
 fun updateNovel(){
@@ -88,8 +123,18 @@ fun deleteNovel(){
 }
 
 fun addLocation(){
-    logger.info { "addLocation() function invoked"}
+    val locationAisle = readNextInt("Enter the aisle number of the book location: ")
+    val locationShelf = readNextInt("Enter the shelf number of the book location:")
+    val locationIndex = readNextInt("Enter the index number of the book location:")
+    val isAdded = locationAPI.add(Location(locationAisle, locationShelf, locationIndex, false))
+
+    if (isAdded) {
+        println("Added Successfully to library")
+    } else {
+        println("Add Failed to library")
+    }
 }
+
 
 fun listLocations(){
     logger.info {"listLocations() function invoked"}
