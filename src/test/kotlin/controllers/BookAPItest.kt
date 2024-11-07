@@ -50,6 +50,7 @@ class BookAPITest {
 
     @Nested
     inner class AddBooks {
+
         @Test
         fun `adding a Book to a populated list adds to ArrayList`() {
             val newBook = Book("H.G. Wells", "6666666666", "The Invisible Man", 8.99, 280, "Sci-Fi", "English", false)
@@ -60,6 +61,27 @@ class BookAPITest {
         fun `adding a Book to an empty list adds to ArrayList`() {
             val newBook = Book("George Orwell", "7777777777", "1984", 9.99, 300, "Dystopian", "English", false)
             assertTrue(emptyBooks!!.add(newBook))
+        }
+    }
+
+    @Nested
+    inner class ListBooks {
+
+        @Test
+        fun `listAllBooks returns No Books Stored message when ArrayList is empty`() {
+            assertEquals(0, emptyBooks!!.numberOfBooks())
+            assertTrue(emptyBooks!!.listAllBooks().lowercase().contains("no books"))
+        }
+    //make sure that test contains an element from the book, such as title.
+        @Test
+        fun `listAllBooks returns Notes when ArrayList has books stored`() {
+            assertEquals(5, populatedBooks!!.numberOfBooks())
+            val booksString = populatedBooks!!.listAllBooks().lowercase()
+            assertTrue(booksString.contains("mystery of the nile".lowercase()))
+            assertTrue(booksString.contains("the stars, like dust".lowercase()))
+            assertTrue(booksString.contains("team of rivals".lowercase()))
+            assertTrue(booksString.contains("harry potter".lowercase()))
+            assertTrue(booksString.contains("steve jobs".lowercase()))//adding lowercase so it becomes case-insensitive
         }
     }
 }
