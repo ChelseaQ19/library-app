@@ -21,7 +21,7 @@ class NovelPITest {
     private var emptyNovel: NovelAPI? = NovelAPI()
 
     @BeforeEach
-    fun setup(){
+    fun setup() {
         mysteryNovel = Novel("The Book Thief", "Markus Zusak", "Historical Fiction", 552, 12.99, "English", false)
         sciFiNovel = Novel("Life of Pi", "Yann Martel", "Adventure", 319, 15.50, "English", false)
         historyNovel = Novel("The Girl with the Dragon Tattoo", "Stieg Larsson", "Thriller", 465, 9.99, "English", true)
@@ -37,7 +37,7 @@ class NovelPITest {
     }
 
     @AfterEach
-    fun tearDown(){
+    fun tearDown() {
         mysteryNovel = null
         sciFiNovel = null
         historyNovel = null
@@ -47,15 +47,19 @@ class NovelPITest {
         emptyNovel = null
     }
 
-    @Test
-    fun `adding a Book to a populated list adds to ArrayList`(){
-        val newNovel = Novel("The Catcher in the Rye", "J.D. Salinger", "Literary Fiction", 277, 14.99, "English", false)
-        assertTrue(populatedNovels!!.add(newNovel))
-    }
+    @Nested
+    inner class AddNovels {
+        @Test
+        fun `adding a Book to a populated list adds to ArrayList`() {
+            val newNovel =
+                Novel("The Catcher in the Rye", "J.D. Salinger", "Literary Fiction", 277, 14.99, "English", false)
+            assertTrue(populatedNovels!!.add(newNovel))
+        }
 
-    @Test
-    fun `adding a Book to an empty list adds to ArrayList`(){
-        val newNovel = Novel("The Great Gatsby", "F. Scott Fitzgerald", "Classic", 180, 10.00, "English", false)
-        assertTrue(emptyNovel!!.add(newNovel))
+        @Test
+        fun `adding a Book to an empty list adds to ArrayList`() {
+            val newNovel = Novel("The Great Gatsby", "F. Scott Fitzgerald", "Classic", 180, 10.00, "English", false)
+            assertTrue(emptyNovel!!.add(newNovel))
+        }
     }
 }

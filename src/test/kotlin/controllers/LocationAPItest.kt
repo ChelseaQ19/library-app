@@ -20,7 +20,7 @@ class LocationAPITest {
     private var emptyLocations: LocationAPI? = LocationAPI()
 
     @BeforeEach
-    fun setup(){
+    fun setup() {
         location1 = Location(1, 2, 3, false)
         location2 = Location(2, 2, 4, false)
         location3 = Location(1, 1, 5, false)
@@ -36,7 +36,7 @@ class LocationAPITest {
     }
 
     @AfterEach
-    fun tearDown(){
+    fun tearDown() {
         location1 = null
         location2 = null
         location3 = null
@@ -46,15 +46,18 @@ class LocationAPITest {
         emptyLocations = null
     }
 
-    @Test
-    fun `adding a Location to a populated list adds to ArrayList`(){
-        val newLocation = Location(4, 5, 9, false)
-        assertTrue(populatedLocations!!.add(newLocation))
-    }
+    @Nested
+    inner class AddLocations {
+        @Test
+        fun `adding a Location to a populated list adds to ArrayList`() {
+            val newLocation = Location(4, 5, 9, false)
+            assertTrue(populatedLocations!!.add(newLocation))
+        }
 
-    @Test
-    fun `adding a Location to an empty list adds to ArrayList`(){
-        val newLocation = Location(6, 6, 1, false)
-        assertTrue(emptyLocations!!.add(newLocation))
+        @Test
+        fun `adding a Location to an empty list adds to ArrayList`() {
+            val newLocation = Location(6, 6, 1, false)
+            assertTrue(emptyLocations!!.add(newLocation))
+        }
     }
 }
