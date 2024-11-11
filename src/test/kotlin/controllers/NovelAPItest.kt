@@ -1,7 +1,6 @@
 package controllers
 
 import ie.setu.controllers.NovelAPI
-import ie.setu.models.Book
 import ie.setu.models.Novel
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -10,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
-class NovelPITest {
+class NovelAPITest {
 
     private var mysteryNovel: Novel? = null
     private var sciFiNovel: Novel? = null
@@ -18,7 +17,7 @@ class NovelPITest {
     private var fantasyNovel: Novel? = null
     private var biographyNovel: Novel? = null
     private var populatedNovels: NovelAPI? = NovelAPI()
-    private var emptyNovel: NovelAPI? = NovelAPI()
+    private var emptyNovels: NovelAPI? = NovelAPI()
 
     @BeforeEach
     fun setup() {
@@ -44,7 +43,7 @@ class NovelPITest {
         fantasyNovel = null
         biographyNovel = null
         populatedNovels = null
-        emptyNovel = null
+        emptyNovels = null
     }
 
     @Nested
@@ -59,7 +58,28 @@ class NovelPITest {
         @Test
         fun `adding a Book to an empty list adds to ArrayList`() {
             val newNovel = Novel("The Great Gatsby", "F. Scott Fitzgerald", "Classic", 180, 10.00, "English", false)
-            assertTrue(emptyNovel!!.add(newNovel))
+            assertTrue(emptyNovels!!.add(newNovel))
+        }
+    }
+
+    @Nested
+    inner class ListNovels {
+
+        @Test
+        fun `listAllNovels returns No Novels Stored message when ArrayList is empty`() {
+            assertEquals(0, emptyNovels!!.numberOfNovels())
+            assertTrue(emptyNovels!!.listAllNovels().lowercase().contains("no novels"))
+        }
+        //make sure that test contains an element from the book, such as title.
+        @Test
+        fun `listAllBooks returns Notes when ArrayList has books stored`() {
+            assertEquals(5, populatedNovels!!.numberOfNovels())
+            val novelsString = populatedNovels!!.listAllNovels().lowercase()
+            assertTrue(novelsString.contains("the book thief".lowercase()))
+            assertTrue(novelsString.contains("life of pi".lowercase()))
+            assertTrue(novelsString.contains("the girl with the dragon tattoo".lowercase()))
+            assertTrue(novelsString.contains("the hobbit".lowercase()))
+            assertTrue(novelsString.contains("pride and prejudice".lowercase()))//adding lowercase so it becomes case-insensitive
         }
     }
 }
