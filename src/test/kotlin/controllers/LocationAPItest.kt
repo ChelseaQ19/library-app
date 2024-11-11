@@ -60,4 +60,28 @@ class LocationAPITest {
             assertTrue(emptyLocations!!.add(newLocation))
         }
     }
+
+    @Nested
+    inner class ListLocations {
+
+        @Test
+        fun `listAllLocations returns No Locations Stored message when ArrayList is empty`() {
+            assertEquals(0, emptyLocations!!.numberOfLocations())
+            assertTrue(emptyLocations!!.listAllLocations().lowercase().contains("no locations"))
+        }
+        //make sure that test contains an element from the book, such as title.
+        @Test
+        fun `listAllLocations returns Locations when ArrayList has locations stored`() {
+            assertEquals(5, populatedLocations!!.numberOfLocations())
+            val locationsString = populatedLocations!!.listAllLocations()
+
+            println("Locations String: $locationsString")
+
+            assertTrue(locationsString.contains("locationAisle=1, locationShelf=2, locationIndex=3"))
+            assertTrue(locationsString.contains("locationAisle=2, locationShelf=2, locationIndex=4"))
+            assertTrue(locationsString.contains("locationAisle=1, locationShelf=1, locationIndex=5"))
+            assertTrue(locationsString.contains("locationAisle=6, locationShelf=6, locationIndex=7"))
+            assertTrue(locationsString.contains("locationAisle=8, locationShelf=9, locationIndex=9"))
+        }
+    }
 }
