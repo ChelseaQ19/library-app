@@ -18,10 +18,19 @@ private val bookAPI = BookAPI()
 private val novelAPI = NovelAPI()
 private val locationAPI = LocationAPI()
 
+
+/**
+ * Starting point for the library management application.
+ * Starts the application by running the main menu.
+ */
 fun main() {
     runMenu()
 }
 
+/**
+ * Displays the main menu option for the library system and reads in user input.
+ * @return the option selected by the user an an [Int].
+ */
 fun mainMenu() : Int {
     print("""
     > ----------------------------------
@@ -44,7 +53,10 @@ fun mainMenu() : Int {
     ==>> """.trimMargin(">"))
     return readNextInt(" > ==>>")
 }
-//creating menu for library management system
+
+/**
+ * Controls the application flow, continuously displaying the menu until the user exits the application.
+ */
 fun runMenu() {
     do {
         val option = mainMenu()
@@ -64,7 +76,12 @@ fun runMenu() {
         }
     } while (true)
 }
-//creating corresponding calls for functions above
+
+/**
+ * Adds a new [Book] to the library.
+ * Prompts the user for book details and lets user know if that has been successful or not.
+ */
+
 fun addBook(){
     val bookAuthor = readNextLine("Enter the author of the book: ")
     val bookISBN = readNextLine("Enter the ISBN of the book: ")
@@ -82,16 +99,40 @@ fun addBook(){
     }
 }
 
+/**
+ * Lists all books stored in the library.
+ * Calls [bookAPI.listAllBooks] to retrieve and display the list.
+ */
 fun listBooks(){
     println(bookAPI.listAllBooks())
 }
 
+/**
+ * Updates an existing book in the library.
+ * A placeholder that logs when invoked.
+ */
 fun updateBook(){
     logger.info { "updateBook() function invoked" }
 }
 
+/**
+ * Deletes a book from the library.
+ * A placeholder that logs when invoked.
+ */
 fun deleteBook(){
-    logger.info { "deleteBook() function invoked" }
+    //logger.info { "deleteNotes() function invoked" }
+    listBooks()
+    if (bookAPI.numberOfBooks() > 0) {
+        //only ask the user to choose the note to delete if notes exist
+        val indexToDelete = readNextInt("Enter the index of the book to delete: ")
+        //pass the index of the note to NoteAPI for deleting and check for success.
+        val bookToDelete = bookAPI.deleteBook(indexToDelete)
+        if (bookToDelete != null) {
+            println("Delete Successful! Deleted book: ${bookToDelete.bookTitle}")
+        } else {
+            println("Delete NOT Successful")
+        }
+    }
 }
 
 fun addNovel(){

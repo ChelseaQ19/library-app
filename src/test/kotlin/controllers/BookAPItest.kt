@@ -5,9 +5,11 @@ import ie.setu.models.Book
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import java.util.Locale
 
 class BookAPITest {
 
@@ -50,6 +52,7 @@ class BookAPITest {
 
     @Nested
     inner class AddBooks {
+
         @Test
         fun `adding a Book to a populated list adds to ArrayList`() {
             val newBook = Book("H.G. Wells", "6666666666", "The Invisible Man", 8.99, 280, "Sci-Fi", "English", false)
@@ -62,4 +65,67 @@ class BookAPITest {
             assertTrue(emptyBooks!!.add(newBook))
         }
     }
+
+    @Nested
+    inner class ListBooks {
+
+        @Test
+        fun `listAllBooks returns No Books Stored message when ArrayList is empty`() {
+            assertEquals(0, emptyBooks!!.numberOfBooks())
+            assertTrue(emptyBooks!!.listAllBooks().lowercase().contains("no books"))
+        }
+    //make sure that test contains an element from the book, such as title.
+        @Test
+        fun `listAllBooks returns Notes when ArrayList has books stored`() {
+            assertEquals(5, populatedBooks!!.numberOfBooks())
+            val booksString = populatedBooks!!.listAllBooks().lowercase()
+            assertTrue(booksString.contains("mystery of the nile".lowercase()))
+            assertTrue(booksString.contains("the stars, like dust".lowercase()))
+            assertTrue(booksString.contains("team of rivals".lowercase()))
+            assertTrue(booksString.contains("harry potter".lowercase()))
+            assertTrue(booksString.contains("steve jobs".lowercase()))//adding lowercase so it becomes case-insensitive
+        }
+    }
+
+    @Nested
+    inner class ArchivedBooks {
+
+    @Test
+    fun `listActiveBooks returns no active books stored when ArrayList is empty`() {
+        assertEquals(0, emptyBooks!!.numberOfActiveBooks())
+        assertTrue(
+            emptyBooks!!.listActiveBooks().lowercase().contains("no active books")
+        )
+    }
+
+    @Test
+    fun `listActiveBooks returns active notes when ArrayList has active books stored`() {
+        assertEquals(3, populatedBooks!!.numberOfActiveBooks())
+        val activeBooksString = populatedBooks!!.listActiveBooks().lowercase()
+        assertTrue(activeBooksString.contains("Mystery of the Nile".lowercase()))
+        assertFalse(activeBooksString.contains("The Stars, Like Dust".lowercase()))
+        assertTrue(activeBooksString.contains("Team of Rivals".lowercase()))
+        assertTrue(activeBooksString.contains("Harry Potter".lowercase()))
+        assertFalse(activeBooksString.contains("Steve Jobs".lowercase()))
+    }
+
+    @Test
+    fun `listArchivedBooks returns no archived books when ArrayList is empty`() {
+        assertEquals(0, emptyBooks!!.numberOfArchivedBooks())
+        assertTrue(
+            emptyBooks!!.listArchivedBooks().lowercase().contains("no archived books")
+        )
+    }
+
+    @Test
+    fun `listArchivedBooks returns archived books when ArrayList has archived books stored`() {
+        assertEquals(2, populatedBooks!!.numberOfArchivedBooks())
+        val archivedBooksString = populatedBooks!!.listArchivedBooks().lowercase(Locale.getDefault())
+        assertFalse(archivedBooksString.contains("Mystery of the Nile".lowercase()))
+        assertTrue(archivedBooksString.contains("The Stars, Like Dust".lowercase()))
+        assertFalse(archivedBooksString.contains("Team of Rivals".lowercase()))
+        assertFalse(archivedBooksString.contains("Harry Potter".lowercase()))
+        assertTrue(archivedBooksString.contains("Steve Jobs".lowercase()))
+    }
 }
+    }

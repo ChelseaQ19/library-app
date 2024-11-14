@@ -2,6 +2,7 @@ package ie.setu.controllers
 
 import ie.setu.models.Novel
 
+
 class NovelAPI {
 
     private var novels = ArrayList<Novel>()
@@ -20,5 +21,20 @@ class NovelAPI {
             }
             listOfNovels
         }
+    }
+
+    fun numberOfNovels(): Int {
+        return novels.size
+    }
+
+    fun findNovel(index: Int): Novel? {
+        return if (isValidListIndex(index, novels)) {
+            novels[index]
+        } else null
+    }
+
+    //utility method to determine if an index is valid in a list.
+    fun isValidListIndex(index: Int, list: List<Any>): Boolean {
+        return (index >= 0 && index < list.size)
     }
 }
