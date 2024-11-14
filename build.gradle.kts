@@ -1,4 +1,5 @@
 plugins {
+    id("org.jetbrains.dokka") version "1.9.20" //taken from the Kotlin website.
     kotlin("jvm") version "2.0.10"
 }
 

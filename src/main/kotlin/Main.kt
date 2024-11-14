@@ -8,7 +8,6 @@ import ie.setu.models.Novel
 import ie.setu.models.Location
 import io.github.oshai.kotlinlogging.KotlinLogging
 import java.lang.System.exit
-import ie.setu.utils.readIntNotNull
 import ie.setu.utils.readNextInt
 import ie.setu.utils.readNextDouble
 import ie.setu.utils.readNextLine
