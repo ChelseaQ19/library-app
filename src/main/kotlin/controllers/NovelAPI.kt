@@ -23,7 +23,6 @@ class NovelAPI {
         }
     }
 
-
     fun numberOfNovels(): Int {
         return novels.size
     }

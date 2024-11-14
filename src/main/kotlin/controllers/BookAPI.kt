@@ -22,6 +22,54 @@ class BookAPI {
         }
     }
 
+    fun listActiveBooks(): String {
+        return if (numberOfActiveBooks() == 0) {
+            "No active books stored"
+        } else {
+            var listOfActiveBooks = ""
+            for (book in books) {
+                if (!book.isBookArchived) {
+                    listOfActiveBooks += "${books.indexOf(book)}: $book \n"
+                }
+            }
+            listOfActiveBooks
+        }
+    }
+
+    fun listArchivedBooks(): String {
+        return if (numberOfArchivedBooks() == 0) {
+            "No archived books stored"
+        } else {
+            var listOfArchivedBooks = ""
+            for (book in books) {
+                if (book.isBookArchived) {
+                    listOfArchivedBooks += "${books.indexOf(book)}: $book \n"
+                }
+            }
+            listOfArchivedBooks
+        }
+    }
+
+    fun numberOfArchivedBooks(): Int {
+        var counter = 0
+        for (note in books) {
+            if (note.isBookArchived) {
+                counter++
+            }
+        }
+        return counter
+    }
+
+    fun numberOfActiveBooks(): Int {
+        var counter = 0
+        for (note in books) {
+            if (!note.isBookArchived) {
+                counter++
+            }
+        }
+        return counter
+    }
+
     fun numberOfBooks(): Int {
         return books.size
     }
@@ -29,6 +77,12 @@ class BookAPI {
     fun findBook(index: Int): Book? {
         return if (isValidListIndex(index, books)) {
             books[index]
+        } else null
+    }
+
+    fun deleteBook(indexToDelete: Int): Book? {
+        return if (isValidListIndex(indexToDelete, books)) {
+            books.removeAt(indexToDelete)
         } else null
     }
 

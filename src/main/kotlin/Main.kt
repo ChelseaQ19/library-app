@@ -120,7 +120,19 @@ fun updateBook(){
  * A placeholder that logs when invoked.
  */
 fun deleteBook(){
-    logger.info { "deleteBook() function invoked" }
+    //logger.info { "deleteNotes() function invoked" }
+    listBooks()
+    if (bookAPI.numberOfBooks() > 0) {
+        //only ask the user to choose the note to delete if notes exist
+        val indexToDelete = readNextInt("Enter the index of the book to delete: ")
+        //pass the index of the note to NoteAPI for deleting and check for success.
+        val bookToDelete = bookAPI.deleteBook(indexToDelete)
+        if (bookToDelete != null) {
+            println("Delete Successful! Deleted book: ${bookToDelete.bookTitle}")
+        } else {
+            println("Delete NOT Successful")
+        }
+    }
 }
 
 fun addNovel(){
