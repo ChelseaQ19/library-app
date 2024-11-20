@@ -3,6 +3,7 @@ package ie.setu
 import ie.setu.controllers.BookAPI
 import ie.setu.controllers.LocationAPI
 import ie.setu.controllers.NovelAPI
+//import ie.setu.controllers.BookLocationController
 import ie.setu.models.Book
 import ie.setu.models.Novel
 import ie.setu.models.Location
@@ -16,6 +17,7 @@ private val logger = KotlinLogging.logger {}
 private val bookAPI = BookAPI()
 private val novelAPI = NovelAPI()
 private val locationAPI = LocationAPI()
+//private val BookLocationAPI = BookLocationAPI()
 
 
 /**
@@ -45,7 +47,9 @@ fun mainMenu() : Int {
     > |   7) Update a novel            |
     > |   8) Delete a novel            |
     > |   9) Add location              |
-    > |   10) List all locations       |
+    > |   10) List all locations
+    >     11) Add book to location     |
+    >     12) List location with books |
     > ----------------------------------
     > |   0) Exit                      |
     > ----------------------------------
@@ -82,6 +86,7 @@ fun runMenu() {
  */
 
 fun addBook(){
+    val bookId = readNextInt("Enter the ID of the book: ")
     val bookAuthor = readNextLine("Enter the author of the book: ")
     val bookISBN = readNextLine("Enter the ISBN of the book: ")
     val bookTitle = readNextLine("Enter the title of the book:")
@@ -89,7 +94,7 @@ fun addBook(){
     val bookPages = readNextInt("Enter the number of pages for the book:")
     val bookGenre = readNextLine("Enter the genre of the book:")
     val bookLanguage = readNextLine("Enter the language of the book:")
-    val isAdded = bookAPI.add(Book(bookAuthor, bookISBN, bookTitle, bookPrice, bookPages, bookGenre, bookLanguage, false))
+    val isAdded = bookAPI.add(Book(bookId, bookAuthor, bookISBN, bookTitle, bookPrice, bookPages, bookGenre, bookLanguage,false))
 
     if (isAdded) {
         println("Added Successfully to library")
@@ -163,10 +168,11 @@ fun deleteNovel(){
 }
 
 fun addLocation(){
+    val locationId = readNextInt("Enter the ID of the book location: ")
     val locationAisle = readNextInt("Enter the aisle number of the book location: ")
     val locationShelf = readNextInt("Enter the shelf number of the book location:")
     val locationIndex = readNextInt("Enter the index number of the book location:")
-    val isAdded = locationAPI.add(Location(locationAisle, locationShelf, locationIndex, false))
+    val isAdded = locationAPI.add(Location(locationId,locationAisle, locationShelf, locationIndex, false))
 
     if (isAdded) {
         println("Added Successfully to library")

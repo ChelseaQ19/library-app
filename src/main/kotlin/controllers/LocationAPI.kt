@@ -11,6 +11,10 @@ class LocationAPI {
         return locations.add(location)
     }
 
+    fun addBookToLocation(bookId: Int, locationId: Int): Boolean {
+
+    }
+
     fun listAllLocations(): String { //lists all books that are stored in the books list.
         return if (locations.isEmpty()) {
             "No locations stored"
