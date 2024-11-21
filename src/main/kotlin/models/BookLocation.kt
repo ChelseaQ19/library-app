@@ -1,4 +1,4 @@
-package models
+package ie.setu.models
 
 
 /**

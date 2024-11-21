@@ -1,6 +1,6 @@
-package controllers
+package ie.setu.controllers
 
-import models.BookLocation
+import ie.setu.models.BookLocation
 
 /**
  * This class manages the relationship between book and location.

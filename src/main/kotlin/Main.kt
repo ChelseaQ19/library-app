@@ -3,21 +3,23 @@ package ie.setu
 import ie.setu.controllers.BookAPI
 import ie.setu.controllers.LocationAPI
 import ie.setu.controllers.NovelAPI
-//import ie.setu.controllers.BookLocationController
+import ie.setu.controllers.BookLocationController
 import ie.setu.models.Book
-import ie.setu.models.Novel
 import ie.setu.models.Location
+import ie.setu.models.Novel
+import ie.setu.models.BookLocation
+import ie.setu.utils.readNextDouble
+import ie.setu.utils.readNextInt
+import ie.setu.utils.readNextLine
 import io.github.oshai.kotlinlogging.KotlinLogging
 import java.lang.System.exit
-import ie.setu.utils.readNextInt
-import ie.setu.utils.readNextDouble
-import ie.setu.utils.readNextLine
 
 private val logger = KotlinLogging.logger {}
 private val bookAPI = BookAPI()
 private val novelAPI = NovelAPI()
 private val locationAPI = LocationAPI()
-//private val BookLocationAPI = BookLocationAPI()
+private val bookLocationController = BookLocationController()
+
 
 
 /**
@@ -47,9 +49,9 @@ fun mainMenu() : Int {
     > |   7) Update a novel            |
     > |   8) Delete a novel            |
     > |   9) Add location              |
-    > |   10) List all locations
-    >     11) Add book to location     |
-    >     12) List location with books |
+    > |   10) List all locations       |
+    > |   11) Add book to location     |
+    > |   12) List location with books |
     > ----------------------------------
     > |   0) Exit                      |
     > ----------------------------------
@@ -74,6 +76,7 @@ fun runMenu() {
             8  -> deleteNovel()
             9  -> addLocation()
             10 -> listLocations()
+            11 -> addBookToLocation()
             0  -> exitApp()
             else -> println("Invalid option entered: ${option}")
         }
@@ -184,6 +187,19 @@ fun addLocation(){
 
 fun listLocations(){
     logger.info {"listLocations() function invoked"}
+}
+
+
+fun addBookToLocation(){
+    val bookId = readNextInt("Enter the ID of the book: ")
+    val locationId = readNextInt("Enter the ID of the location: ")
+    val isAdded = locationAPI.addBookToLocation(bookId, locationId)
+
+    if (isAdded) {
+        println("Book successfully added to location!")
+    } else {
+        println("Book failed to be added to location!")
+    }
 }
 
 fun exitApp(){
