@@ -13,17 +13,32 @@ class LocationAPI {
         return locations.add(location)
     }
     /**
-     *Associates a book with a location in the library.
-     *@paramId bookId the book ID to add to the location.
-     *@paramId locationId the location ID where the book is to be added.
+     * Adds multiple books to multiple locations in the library.
+     * This method takes two lists: one for book IDs and one for location IDs.
+     * It loops through both lists and associates each book with each location,
+     * creating a new BookLocation entry for each combination.
+     *
+     * @param bookIds a list of book IDs to be added to locations.
+     * @param locationIds a list of location IDs where books will be added.
+     * @return true if the books were successfully added to the locations.
      */
-    fun addBookToLocation(bookId: Int, locationId: Int): Boolean {
+    fun addBookToLocation(bookIds: List<Int>, locationIds: List<Int>): Boolean {
+
+        for (locationId in locationIds){
+
+
+
+        for (bookId in bookIds){
+
+
 
         val bookLocation = BookLocation(bookId, locationId)
 
         bookLocations.add(bookLocation)
         
         return true
+        }
+
     }
 
     fun listAllLocations(): String { //lists all books that are stored in the books list.
