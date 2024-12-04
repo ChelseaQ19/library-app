@@ -13,13 +13,25 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import java.util.Locale
 
+/**
+ * Test class for testing the functionality of the [BookLocationController]
+ * This class contains tests for adding books to locations, and for handling multiple books and locations.
+ * AddingBookController to test the controller that was created.
+ */
 class BookLocationControllerAPITest {
+
 
     private var spiritualBook: Book? = null
     private var crimeBook: Book? = null
     private var location1: Location? = null
     private var location2: Location? = null
     private var bookLocationController: BookLocationController? = null
+
+    /**
+     * Creating two books and two locations to test.
+     * Creating an instance of the [BookLocationController], which manages the relationship between book and location.
+     * Adding the two books to their corresponding locations, using {addBookToLocation}
+     */
 
     @BeforeEach
     fun setup() {
@@ -49,6 +61,9 @@ class BookLocationControllerAPITest {
     @Nested
     inner class AddBooksToLocations {
 
+        /**
+         * Creating a new book and adding it to two locations (location1, location2), using the method of {addBookToLocation}
+         */
         @Test
         fun `adding a Book to multiple locations`() {
             val newBook = Book(8, "Biggie Big", "8888888888", "The Ghost", 16.99, 350, "Non-Fiction", "English", false)
@@ -62,15 +77,6 @@ class BookLocationControllerAPITest {
             val bookIds = listOf(spiritualBook!!.bookId, crimeBook!!.bookId) //list of book IDs created
             val locationIds = listOf(location1!!.locationId, location2!!.locationId) //list of location IDs
 
-            //verification of the books being added to the locations
-            //val booksInLocation1 = bookLocationController!!.findBooksInLocation(location1!!.locationId)
-            //val booksInLocation2 = bookLocationController!!.findBooksInLocation(location2!!.locationId)
-
-            //Assertions of books being present within the locations provided
-            //assertTrue(booksInLocation1.any {it.bookId == spiritualBook!!.bookId})
-            //assertTrue(booksInLocation2.any {it.bookId == spiritualBook!!.bookId})
-            //assertTrue(booksInLocation1.any {it.bookId == crimeBook!!.bookId})
-            //assertTrue(booksInLocation2.any {it.bookId == crimeBook!!.bookId})
         }
     }
 }
