@@ -10,7 +10,6 @@ class BookLocationController {
     /**
      * List that holds book-location pairs. Allows you to add, update and list items.
      */
-
     private val bookLocations = mutableListOf<BookLocation>()
 
     /**
@@ -22,6 +21,7 @@ class BookLocationController {
     fun addBookToLocation(bookId: Int, locationId: Int) {
         bookLocations.add(BookLocation(bookId, locationId))
     }
+
     /**
      * Adds a book to a specific location.
      *
@@ -39,4 +39,30 @@ class BookLocationController {
             }
         }
     }
+
+
+    /**
+     * Adds a book to a specific location.
+     *
+     * @param bookIds-unique ID for the book classes.
+     * @param locationIds-unique ID for the location classes.
+     * the 'for' loop goes through the list of books, one by one.
+     * the 'for' loop goes through each location, one by one.
+     * 'bookLocations.add(BookLocation(bookId, locationId))' combines the book and location,adding them together.
+     */
+
+    fun findBooksInLocation(locationId: Int): List<Int> {
+        val booksInLocation = mutableListOf<Int>() //creates a list to store book IDs
+
+        //Looping through the bookLocations to find matches
+        for (bookLocation in bookLocations) {
+            if (bookLocation.locationId == locationId){ //Checking if the location matches
+                booksInLocation.add(bookLocation.bookId) //Adds the book ID to the list
+            }
+        }
+
+        return booksInLocation
+    }
 }
+
+
