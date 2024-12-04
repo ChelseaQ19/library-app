@@ -40,10 +40,9 @@ fun mainMenu() : Int {
     > |   3) Update a book             |
     > |   4) Delete a book             |
     > |   5) Add location              |
-    > |   6) List all locations       |
-    > |   7) Add books to locations   |
-    > |   8) List location with books |
-    > |   9) Find locations           |
+    > |   6) List all locations        |
+    > |   7) Add books to locations    |
+    > |   8) Find books in location    |        
     > ----------------------------------
     > |   0) Exit                      |
     > ----------------------------------
@@ -65,8 +64,7 @@ fun runMenu() {
             5  -> addLocation()
             6 -> listLocations()
             7 -> addManyBooksToManyLocations()
-            //12 -> listLocation
-            //13 -> findLocation
+            8 -> findBooksInLocation()
             0  -> exitApp()
             else -> println("Invalid option entered: ${option}")
         }
@@ -117,12 +115,11 @@ fun updateBook(){
  * A placeholder that logs when invoked.
  */
 fun deleteBook(){
-    //logger.info { "deleteNotes() function invoked" }
     listBooks()
     if (bookAPI.numberOfBooks() > 0) {
-        //only ask the user to choose the note to delete if notes exist
+        //only ask the user to choose the book to delete if books exist
         val indexToDelete = readNextInt("Enter the index of the book to delete: ")
-        //pass the index of the note to NoteAPI for deleting and check for success.
+        //pass the index of the book to BookAPI for deleting and check for success.
         val bookToDelete = bookAPI.deleteBook(indexToDelete)
         if (bookToDelete != null) {
             println("Delete Successful! Deleted book: ${bookToDelete.bookTitle}")
@@ -175,6 +172,29 @@ fun addManyBooksToManyLocations() {
     println("Books have been added to the specified locations.")
 }
 
+/**
+ * Using similar styles to previous adding/ listing methods.
+ * Asks the user to type the ID of the location they want to search (After adding the location(s).
+ * Calls the findBooksInLocation() method in the BookLocationController to get the book IDs.
+ * If the list of books isn't empty, it shows the book IDs in that location.
+ * If the list of books are empty, it tells the user that no books are in the current location.
+ * following the same pattern as the 'addBook' method
+ */
+
+fun findBooksInLocation() {
+
+    println("Enter the IDs of the location you want to search: ")
+    val locationId = readNextLine(" > ").toInt()
+
+
+    val bookIds = bookLocationController.findBooksInLocation(locationId)
+
+    if (bookIds.isNotEmpty()) {
+        println("Books found in location $locationId: ${bookIds.joinToString(" , ")}")
+    } else {
+        println("No books found in location $locationId")
+    }
+}
 
 fun exitApp(){
     println("Exiting...bye")

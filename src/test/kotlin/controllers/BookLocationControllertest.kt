@@ -3,11 +3,8 @@ package controllers
 import ie.setu.controllers.BookLocationController
 import ie.setu.models.Book
 import ie.setu.models.Location
-import ie.setu.models.BookLocation
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -65,7 +62,7 @@ class BookLocationControllerAPITest {
          * Creating a new book and adding it to two locations (location1, location2), using the method of {addBookToLocation}
          */
         @Test
-        fun `adding a Book to multiple locations`() {
+        fun `adding a book to many locations`() {
             val newBook = Book(8, "Biggie Big", "8888888888", "The Ghost", 16.99, 350, "Non-Fiction", "English", false)
             bookLocationController!!.addBookToLocation(newBook!!.bookId, location1!!.locationId)
             bookLocationController!!.addBookToLocation(newBook!!.bookId, location2!!.locationId)
@@ -77,6 +74,29 @@ class BookLocationControllerAPITest {
             val bookIds = listOf(spiritualBook!!.bookId, crimeBook!!.bookId) //list of book IDs created
             val locationIds = listOf(location1!!.locationId, location2!!.locationId) //list of location IDs
 
+        }
+    }
+
+    @Nested
+    inner class FindBooksInLocations {
+
+        /**
+         * Creating a new method to find the book in the specified location.
+         * [findBooksInLocation]- new method name for finding the testing book in specified location.
+         */
+        @Test
+        fun `finding a book in a location`() {
+            val newBook =
+                Book(9, "Diarmuid O' Connor", "7777771111", "The Test", 20.99, 500, "Non-Fiction", "English", false)
+            bookLocationController!!.addBookToLocation(newBook!!.bookId, location1!!.locationId)
+
+
+            val booksInLocation1 = bookLocationController!!.findBooksInLocation(location1!!.locationId)
+            val booksInLocation2 = bookLocationController!!.findBooksInLocation(location2!!.locationId)
+
+
+            assertTrue(booksInLocation1.contains(spiritualBook!!.bookId), "Spiritual Book is in location1")
+            assertTrue(booksInLocation2.contains(crimeBook!!.bookId), "Crime Book is in location1")
         }
     }
 }
