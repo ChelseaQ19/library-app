@@ -21,11 +21,9 @@ class LocationAPITest {
 
     @BeforeEach
     fun setup() {
-        location1 = Location(1, 2, 3, false)
-        location2 = Location(2, 2, 4, false)
-        location3 = Location(1, 1, 5, false)
-        location4 = Location(6, 6, 7, false)
-        location5 = Location(8, 9, 9, false)
+        location1 = Location(9, 1, "Shelf A", 3, false)
+        location4 = Location(10, 6, "Shelf B", 7, false)
+        location5 = Location(11, 8, "Shelf C", 9, false)
 
         //adding 5 Note to the notes api
         populatedLocations!!.add(location1!!)
@@ -50,13 +48,13 @@ class LocationAPITest {
     inner class AddLocations {
         @Test
         fun `adding a Location to a populated list adds to ArrayList`() {
-            val newLocation = Location(4, 5, 9, false)
+            val newLocation = Location(11, 4, "Shelf D", 9, false)
             assertTrue(populatedLocations!!.add(newLocation))
         }
 
         @Test
         fun `adding a Location to an empty list adds to ArrayList`() {
-            val newLocation = Location(6, 6, 1, false)
+            val newLocation = Location(12, 6, "Shelf E", 1, false)
             assertTrue(emptyLocations!!.add(newLocation))
         }
     }
@@ -77,11 +75,11 @@ class LocationAPITest {
 
             println("Locations String: $locationsString")
 
-            assertTrue(locationsString.contains("locationAisle=1, locationShelf=2, locationIndex=3"))
-            assertTrue(locationsString.contains("locationAisle=2, locationShelf=2, locationIndex=4"))
-            assertTrue(locationsString.contains("locationAisle=1, locationShelf=1, locationIndex=5"))
-            assertTrue(locationsString.contains("locationAisle=6, locationShelf=6, locationIndex=7"))
-            assertTrue(locationsString.contains("locationAisle=8, locationShelf=9, locationIndex=9"))
+            assertTrue(locationsString.contains("locationId=9, locationAisle=1, locationShelf=Shelf A, locationIndex=3"))
+            assertTrue(locationsString.contains("locationId=13,locationAisle=2, locationShelf=Shelf D, locationIndex=4"))
+            assertTrue(locationsString.contains("locationId=14,locationAisle=1, locationShelf=Shelf G, locationIndex=5"))
+            assertTrue(locationsString.contains("locationId=10,locationAisle=6, locationShelf=Shelf B, locationIndex=7"))
+            assertTrue(locationsString.contains("locationId=11,locationAisle=8, locationShelf=Shelf C, locationIndex=9"))
         }
     }
 }

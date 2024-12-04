@@ -24,14 +24,14 @@ class BookAPITest {
     @BeforeEach
     fun setup() {
         mysteryBook =
-            Book("Agatha Christie", "1111111111", "Mystery of the Nile", 10.99, 250, "Mystery", "English", false)
-        sciFiBook = Book("Isaac Asimov", "2222222222", "The Stars, Like Dust", 15.50, 300, "Sci-Fi", "English", false)
+            Book(1,"Agatha Christie", "1111111111", "Mystery of the Nile", 10.99, 250, "Mystery", "English", false)
+        sciFiBook = Book(2,"Isaac Asimov", "2222222222", "The Stars, Like Dust", 15.50, 300, "Sci-Fi", "English", false)
         historyBook =
-            Book("Doris Kearns Goodwin", "3333333333", "Team of Rivals", 20.0, 900, "History", "English", false)
-        fantasyBook = Book("J.K. Rowling", "4444444444", "Harry Potter", 9.99, 400, "Fantasy", "English", false)
-        biographyBook = Book("Walter Isaacson", "5555555555", "Steve Jobs", 12.0, 600, "Biography", "English", false)
+            Book(3,"Doris Kearns Goodwin", "3333333333", "Team of Rivals", 20.0, 900, "History", "English", false)
+        fantasyBook = Book(4,"J.K. Rowling", "4444444444", "Harry Potter", 9.99, 400, "Fantasy", "English", false)
+        biographyBook = Book(5,"Walter Isaacson", "5555555555", "Steve Jobs", 12.0, 600, "Biography", "English", false)
 
-        //adding 5 Note to the notes api
+        //adding 5 Books to the books api
         populatedBooks!!.add(mysteryBook!!)
         populatedBooks!!.add(sciFiBook!!)
         populatedBooks!!.add(historyBook!!)
@@ -55,13 +55,13 @@ class BookAPITest {
 
         @Test
         fun `adding a Book to a populated list adds to ArrayList`() {
-            val newBook = Book("H.G. Wells", "6666666666", "The Invisible Man", 8.99, 280, "Sci-Fi", "English", false)
+            val newBook = Book(6,"H.G. Wells", "6666666666", "The Invisible Man", 8.99, 280, "Sci-Fi", "English", false)
             assertTrue(populatedBooks!!.add(newBook))
         }
 
         @Test
         fun `adding a Book to an empty list adds to ArrayList`() {
-            val newBook = Book("George Orwell", "7777777777", "1984", 9.99, 300, "Dystopian", "English", false)
+            val newBook = Book(7,"George Orwell", "7777777777", "1984", 9.99, 300, "Dystopian", "English", false)
             assertTrue(emptyBooks!!.add(newBook))
         }
     }

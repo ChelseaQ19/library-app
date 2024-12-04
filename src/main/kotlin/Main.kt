@@ -3,20 +3,23 @@ package ie.setu
 import ie.setu.controllers.BookAPI
 import ie.setu.controllers.LocationAPI
 import ie.setu.controllers.NovelAPI
+import ie.setu.controllers.BookLocationController
 import ie.setu.models.Book
-import ie.setu.models.Novel
 import ie.setu.models.Location
+import ie.setu.models.Novel
+import ie.setu.models.BookLocation
+import ie.setu.utils.readNextDouble
+import ie.setu.utils.readNextInt
+import ie.setu.utils.readNextLine
 import io.github.oshai.kotlinlogging.KotlinLogging
 import java.lang.System.exit
-import ie.setu.utils.readIntNotNull
-import ie.setu.utils.readNextInt
-import ie.setu.utils.readNextDouble
-import ie.setu.utils.readNextLine
 
 private val logger = KotlinLogging.logger {}
 private val bookAPI = BookAPI()
 private val novelAPI = NovelAPI()
 private val locationAPI = LocationAPI()
+private val bookLocationController = BookLocationController()
+
 
 
 /**
@@ -29,7 +32,7 @@ fun main() {
 
 /**
  * Displays the main menu option for the library system and reads in user input.
- * @return the option selected by the user an an [Int].
+ * @return the option selected by the user an [Int].
  */
 fun mainMenu() : Int {
     print("""
@@ -47,6 +50,9 @@ fun mainMenu() : Int {
     > |   8) Delete a novel            |
     > |   9) Add location              |
     > |   10) List all locations       |
+    > |   11) Add books to locations   |
+    > |   12) List location with books |
+    > |   13) Find locations           |
     > ----------------------------------
     > |   0) Exit                      |
     > ----------------------------------
@@ -71,6 +77,9 @@ fun runMenu() {
             8  -> deleteNovel()
             9  -> addLocation()
             10 -> listLocations()
+            11 -> addManyBooksToManyLocations()
+            //12 -> listLocation
+            //13 -> findLocation
             0  -> exitApp()
             else -> println("Invalid option entered: ${option}")
         }
@@ -83,6 +92,7 @@ fun runMenu() {
  */
 
 fun addBook(){
+    val bookId = readNextInt("Enter the ID of the book: ")
     val bookAuthor = readNextLine("Enter the author of the book: ")
     val bookISBN = readNextLine("Enter the ISBN of the book: ")
     val bookTitle = readNextLine("Enter the title of the book:")
@@ -90,7 +100,7 @@ fun addBook(){
     val bookPages = readNextInt("Enter the number of pages for the book:")
     val bookGenre = readNextLine("Enter the genre of the book:")
     val bookLanguage = readNextLine("Enter the language of the book:")
-    val isAdded = bookAPI.add(Book(bookAuthor, bookISBN, bookTitle, bookPrice, bookPages, bookGenre, bookLanguage, false))
+    val isAdded = bookAPI.add(Book(bookId, bookAuthor, bookISBN, bookTitle, bookPrice, bookPages, bookGenre, bookLanguage,false))
 
     if (isAdded) {
         println("Added Successfully to library")
@@ -164,10 +174,11 @@ fun deleteNovel(){
 }
 
 fun addLocation(){
+    val locationId = readNextInt("Enter the ID of the book location: ")
     val locationAisle = readNextInt("Enter the aisle number of the book location: ")
-    val locationShelf = readNextInt("Enter the shelf number of the book location:")
+    val locationShelf = readNextLine("Enter the shelf number of the book location:")
     val locationIndex = readNextInt("Enter the index number of the book location:")
-    val isAdded = locationAPI.add(Location(locationAisle, locationShelf, locationIndex, false))
+    val isAdded = locationAPI.add(Location(locationId,locationAisle, locationShelf, locationIndex, false))
 
     if (isAdded) {
         println("Added Successfully to library")
@@ -180,6 +191,32 @@ fun addLocation(){
 fun listLocations(){
     logger.info {"listLocations() function invoked"}
 }
+
+/**
+ * Using the mapping format (public inline fun <T, R> Array<out T>.map(transform: (T) -> R): List<R> {)-Kotloin Offical website
+ * Splitting the input (splitting the string)
+ * Processing each item (converting each piece of string into a number format for results)
+ * Returning the new collection (creates a new list of numbers, which are the book IDs)
+ * following the same pattern as the 'addBook' method
+ */
+
+fun addManyBooksToManyLocations() {
+    //Asks the user for book ID's
+    println("Enter the IDs of the books (comma seperated): ")
+    val booksInput = readNextLine(" > ")
+    val bookIds = booksInput.split(",").map { it.trim().toInt() }
+
+    //Asks the user for location ID's
+    println("Enter the IDs of the locations (comma seperated): ")
+    val locationsInput = readNextLine(" > ")
+    val locationIds = locationsInput.split(",").map { it.trim().toInt() }
+
+    //calling the method from the BookLocationController
+    bookLocationController.addManyBooksToManyLocations(bookIds, locationIds)
+
+    println("Books have been added to the specified locations.")
+}
+
 
 fun exitApp(){
     println("Exiting...bye")
