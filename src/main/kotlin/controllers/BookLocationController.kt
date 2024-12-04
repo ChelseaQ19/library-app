@@ -4,29 +4,39 @@ import ie.setu.models.BookLocation
 
 /**
  * This class manages the relationship between book and location.
- * This will act as a helper to add a book to a specific location.
+ * This will act as a helper to add books to specific locations.
  */
 class BookLocationController {
+    /**
+     * List that holds book-location pairs. Allows you to add, update and list items.
+     */
 
-    //list that holds book-location pairs. Allows you to add, update and list items within the list.
     private val bookLocations = mutableListOf<BookLocation>()
 
     /**
      * Adds a book to a specific location.
      *
-     * @param bookId-unique ID for the book class.
-     * @param locationId-unique ID for the location class.
+     * @param bookIds-unique ID for the book class.
+     * @param locationIds-unique ID for the location class.
      */
     fun addBookToLocation(bookId: Int, locationId: Int) {
         bookLocations.add(BookLocation(bookId, locationId))
     }
     /**
-     * Lists all the books to a specific location.
+     * Adds a book to a specific location.
      *
-     * @param locationId the ID of the location to search for.
-     * @return a list of books stored at that specific location.
+     * @param bookIds-unique ID for the book classes.
+     * @param locationIds-unique ID for the location classes.
+     * the 'for' loop goes through the list of books, one by one.
+     * the 'for' loop goes through each location, one by one.
+     * 'bookLocations.add(BookLocation(bookId, locationId))' combines the book and location,adding them together.
      */
-
-    fun listBooksinLocations(locationId: Int) = bookLocations.filter { it.locationId == locationId }
-
+    fun addManyBooksToManyLocations(bookIds: List<Int>, locationIds: List<Int>) {
+        //loops through both lists and adds each book-location combination.
+        for (bookId in bookIds) {
+            for (locationId in locationIds) {
+                bookLocations.add(BookLocation(bookId, locationId))
+            }
+        }
+    }
 }

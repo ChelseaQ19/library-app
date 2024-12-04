@@ -12,6 +12,7 @@ class LocationAPI {
     fun add(location: Location): Boolean { //adding a book to our application
         return locations.add(location)
     }
+
     /**
      * Adds multiple books to multiple locations in the library.
      * This method takes two lists: one for book IDs and one for location IDs.
@@ -22,23 +23,20 @@ class LocationAPI {
      * @param locationIds a list of location IDs where books will be added.
      * @return true if the books were successfully added to the locations.
      */
-    fun addBookToLocation(bookIds: List<Int>, locationIds: List<Int>): Boolean {
+    fun addBookToLocation(bookIds: List<Int>, locationIds: List<Int>) {
 
-        for (locationId in locationIds){
-
-
-
-        for (bookId in bookIds){
+        for (locationId in locationIds) {
 
 
+            for (bookId in bookIds) {
 
-        val bookLocation = BookLocation(bookId, locationId)
 
-        bookLocations.add(bookLocation)
-        
-        return true
+                val bookLocation = BookLocation(bookId, locationId)
+
+                bookLocations.add(bookLocation)
+
+            }
         }
-
     }
 
     fun listAllLocations(): String { //lists all books that are stored in the books list.
