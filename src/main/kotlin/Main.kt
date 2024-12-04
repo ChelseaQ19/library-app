@@ -2,11 +2,9 @@ package ie.setu
 
 import ie.setu.controllers.BookAPI
 import ie.setu.controllers.LocationAPI
-import ie.setu.controllers.NovelAPI
 import ie.setu.controllers.BookLocationController
 import ie.setu.models.Book
 import ie.setu.models.Location
-import ie.setu.models.Novel
 import ie.setu.models.BookLocation
 import ie.setu.utils.readNextDouble
 import ie.setu.utils.readNextInt
@@ -16,11 +14,8 @@ import java.lang.System.exit
 
 private val logger = KotlinLogging.logger {}
 private val bookAPI = BookAPI()
-private val novelAPI = NovelAPI()
 private val locationAPI = LocationAPI()
 private val bookLocationController = BookLocationController()
-
-
 
 /**
  * Starting point for the library management application.
@@ -44,15 +39,11 @@ fun mainMenu() : Int {
     > |   2) List all books            |
     > |   3) Update a book             |
     > |   4) Delete a book             |
-    > |   5) Add a novel               |
-    > |   6) List all novels           |
-    > |   7) Update a novel            |
-    > |   8) Delete a novel            |
-    > |   9) Add location              |
-    > |   10) List all locations       |
-    > |   11) Add books to locations   |
-    > |   12) List location with books |
-    > |   13) Find locations           |
+    > |   5) Add location              |
+    > |   6) List all locations       |
+    > |   7) Add books to locations   |
+    > |   8) List location with books |
+    > |   9) Find locations           |
     > ----------------------------------
     > |   0) Exit                      |
     > ----------------------------------
@@ -71,13 +62,9 @@ fun runMenu() {
             2  -> listBooks()
             3  -> updateBook()
             4  -> deleteBook()
-            5  -> addNovel()
-            6  -> listNovels()
-            7  -> updateNovel()
-            8  -> deleteNovel()
-            9  -> addLocation()
-            10 -> listLocations()
-            11 -> addManyBooksToManyLocations()
+            5  -> addLocation()
+            6 -> listLocations()
+            7 -> addManyBooksToManyLocations()
             //12 -> listLocation
             //13 -> findLocation
             0  -> exitApp()
@@ -145,34 +132,6 @@ fun deleteBook(){
     }
 }
 
-fun addNovel(){
-    val novelTitle = readNextLine("Enter the title of the novel: ")
-    val novelAuthor = readNextLine("Enter the author of the novel: ")
-    val novelGenre = readNextLine("Enter the genre of the novel:")
-    val novelPages = readNextInt("Enter the number of pages for the novel:")
-    val novelPrice = readNextDouble("Enter the price of the novel:")
-    val novelLanguage = readNextLine("Enter the language of the novel:")
-    val isAdded = novelAPI.add(Novel(novelTitle, novelAuthor, novelGenre, novelPages, novelPrice, novelLanguage, false))
-
-    if (isAdded) {
-        println("Added Successfully to library")
-    } else {
-        println("Add Failed to library")
-    }
-}
-
-fun listNovels(){
-    println(novelAPI.listAllNovels())
-}
-
-fun updateNovel(){
-    logger.info { "updateNovel() function invoked" }
-}
-
-fun deleteNovel(){
-    logger.info { "deleteNovel() function invoked" }
-}
-
 fun addLocation(){
     val locationId = readNextInt("Enter the ID of the book location: ")
     val locationAisle = readNextInt("Enter the aisle number of the book location: ")
@@ -186,7 +145,6 @@ fun addLocation(){
         println("Add Failed to library")
     }
 }
-
 
 fun listLocations(){
     logger.info {"listLocations() function invoked"}
