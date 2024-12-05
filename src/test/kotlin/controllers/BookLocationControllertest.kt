@@ -6,6 +6,7 @@ import ie.setu.models.Location
 import ie.setu.persistance.XMLSerializer
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -27,9 +28,10 @@ class BookLocationControllerAPITest {
     private var bookLocationController: BookLocationController? = null
 
     /**
-     * Creating two books and two locations to test.
+     * Creating two books and two locations to test together.
      * Creating an instance of the [BookLocationController], which manages the relationship between book and location.
      * Adding the two books to their corresponding locations, using {addBookToLocation}
+     * (Using a similar layout to the other JUnit tests.
      */
 
     @BeforeEach
@@ -43,7 +45,11 @@ class BookLocationControllerAPITest {
         //creating controller instances
         bookLocationController = BookLocationController(XMLSerializer(File("bookLocations.xml")))
 
-        //add books to locations check
+        /**
+         * Takes the ID of the spiritual book[spiritualBook.bookId] and assigns it to the ID of the first location [location1.locationId]
+         * Takes the ID of the crime book[crimeBook.bookId] and assigns it to the ID of the second location [location2.locationId]
+         */
+
         bookLocationController!!.addBookToLocation(spiritualBook!!.bookId, location1!!.locationId)
         bookLocationController!!.addBookToLocation(crimeBook!!.bookId, location2!!.locationId)
     }
@@ -100,6 +106,45 @@ class BookLocationControllerAPITest {
             assertTrue(booksInLocation1.contains(spiritualBook!!.bookId), "Spiritual Book is in location1")
             assertTrue(booksInLocation2.contains(crimeBook!!.bookId), "Crime Book is in location1")
         }
+
+        /**
+         * Removed assertions that did not apply to this specific controller test (BookLocation does not have number of...)
+         * Tests to make sure the books mentioned are in their correct location as intended.
+         */
+
+        @Nested
+        inner class PersistenceTests {
+
+            @Test
+            fun `saving and loading an empty collection in XML doesn't crash app`() {
+
+                val storingBookLocations =BookLocationController(XMLSerializer(File("bookLocation.xml")))
+                storingBookLocations.store()
+
+
+                val loadedBookLocations = BookLocationController(XMLSerializer(File("bookLocation.xml")))
+                loadedBookLocations.load()
+
+            }
+
+            @Test
+            fun `saving and loading an loaded collection in XML doesn't loose data`() {
+
+                val storingBookLocations = BookLocationController(XMLSerializer(File("bookLocations.xml")))
+                storingBookLocations.addBookToLocation(spiritualBook!!.bookId, location1!!.locationId)
+                storingBookLocations.addBookToLocation(crimeBook!!.bookId, location2!!.locationId)
+                storingBookLocations.store()
+
+
+                val loadedBookLocations = BookLocationController(XMLSerializer(File("bookLocations.xml")))
+                loadedBookLocations.load()
+
+                assertTrue(loadedBookLocations.findBooksInLocation(location1!!.locationId).contains(spiritualBook!!.bookId))
+                assertTrue(loadedBookLocations.findBooksInLocation(location2!!.locationId).contains(crimeBook!!.bookId))
+
+            }
+        }
+
     }
 }
 
