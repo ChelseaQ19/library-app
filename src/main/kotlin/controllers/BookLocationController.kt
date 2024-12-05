@@ -1,16 +1,19 @@
 package ie.setu.controllers
 
 import ie.setu.models.BookLocation
+import ie.setu.models.Location
+import ie.setu.persistance.Serializer
 
 /**
  * This class manages the relationship between book and location.
  * This will act as a helper to add books to specific locations.
  */
-class BookLocationController {
+class BookLocationController(serializerType: Serializer)  {
     /**
      * List that holds book-location pairs. Allows you to add, update and list items.
      */
-    private val bookLocations = mutableListOf<BookLocation>()
+    private var bookLocations = mutableListOf<BookLocation>()
+    private val serializer: Serializer = serializerType
 
     /**
      * Adds a book to a specific location.
@@ -61,6 +64,16 @@ class BookLocationController {
         }
 
         return booksInLocation
+    }
+
+    @Throws(Exception::class)
+    fun load() {
+        bookLocations = serializer.read() as ArrayList<BookLocation>
+    }
+
+    @Throws(Exception::class)
+    fun store() {
+        serializer.write(bookLocations)
     }
 }
 

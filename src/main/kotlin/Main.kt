@@ -16,7 +16,7 @@ import java.lang.System.exit
 private val logger = KotlinLogging.logger {}
 private val bookAPI = BookAPI(XMLSerializer(File("books.xml")))
 private val locationAPI = LocationAPI(XMLSerializer(File("locations.xml")))
-private val bookLocationController = BookLocationController()
+private val bookLocationController = BookLocationController(XMLSerializer(File("bookLocations.xml")))
 
 /**
  * Starting point for the library management application.
@@ -48,6 +48,8 @@ fun mainMenu() : Int {
     > |   10)Load books                |
     > |   11)Save locations            |
     > |   12)Load locations            |
+    > |   13)Save books in locations   |
+    > |   12)Load books in locations   |
     > ----------------------------------
     > |   0) Exit                      |
     > ----------------------------------
@@ -74,6 +76,8 @@ fun runMenu() {
             10 ->load()
             11 ->saveLocations()
             12 ->loadLocations()
+            13 ->saveBookLocations()
+            14 ->loadBookLocations()
             0  -> exitApp()
             else -> println("Invalid option entered: ${option}")
         }
@@ -232,6 +236,22 @@ fun saveLocations() {
 fun loadLocations() {
     try {
         locationAPI.load()
+    } catch (e: Exception) {
+        System.err.println("Error reading from file: $e")
+    }
+}
+
+fun saveBookLocations() {
+    try {
+        bookLocationController.store()
+    } catch (e: Exception) {
+        System.err.println("Error writing to file: $e")
+    }
+}
+
+fun loadBookLocations() {
+    try {
+       bookLocationController.load()
     } catch (e: Exception) {
         System.err.println("Error reading from file: $e")
     }
