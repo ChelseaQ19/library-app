@@ -15,7 +15,7 @@ import java.lang.System.exit
 
 private val logger = KotlinLogging.logger {}
 private val bookAPI = BookAPI(XMLSerializer(File("books.xml")))
-private val locationAPI = LocationAPI()
+private val locationAPI = LocationAPI(XMLSerializer(File("locations.xml")))
 private val bookLocationController = BookLocationController()
 
 /**
@@ -46,6 +46,8 @@ fun mainMenu() : Int {
     > |   8) Find books in location    |  
     > |   9) Save books                |
     > |   10)Load books                |
+    > |   11)Save locations            |
+    > |   12)Load locations            |
     > ----------------------------------
     > |   0) Exit                      |
     > ----------------------------------
@@ -70,6 +72,8 @@ fun runMenu() {
             8 -> findBooksInLocation()
             9 -> save()
             10 ->load()
+            11 ->saveLocations()
+            12 ->loadLocations()
             0  -> exitApp()
             else -> println("Invalid option entered: ${option}")
         }
@@ -137,7 +141,7 @@ fun deleteBook(){
 fun addLocation(){
     val locationId = readNextInt("Enter the ID of the book location: ")
     val locationAisle = readNextInt("Enter the aisle number of the book location: ")
-    val locationShelf = readNextLine("Enter the shelf number of the book location:")
+    val locationShelf = readNextLine("Enter the shelf of the book location:")
     val locationIndex = readNextInt("Enter the index number of the book location:")
     val isAdded = locationAPI.add(Location(locationId,locationAisle, locationShelf, locationIndex, false))
 
@@ -212,6 +216,22 @@ fun save() {
 fun load() {
     try {
         bookAPI.load()
+    } catch (e: Exception) {
+        System.err.println("Error reading from file: $e")
+    }
+}
+
+fun saveLocations() {
+    try {
+        locationAPI.store()
+    } catch (e: Exception) {
+        System.err.println("Error writing to file: $e")
+    }
+}
+
+fun loadLocations() {
+    try {
+        locationAPI.load()
     } catch (e: Exception) {
         System.err.println("Error reading from file: $e")
     }

@@ -1,13 +1,16 @@
 package ie.setu.controllers
 
 
+import ie.setu.models.Book
 import ie.setu.models.Location
 import ie.setu.models.BookLocation
+import ie.setu.persistance.Serializer
 
-class LocationAPI {
+class LocationAPI(serializerType: Serializer)  {
 
     private var locations = ArrayList<Location>()
     private var bookLocations = ArrayList<BookLocation>()
+    private val serializer: Serializer = serializerType
 
     fun add(location: Location): Boolean { //adding a book to our application
         return locations.add(location)
@@ -64,5 +67,15 @@ class LocationAPI {
     //utility method to determine if an index is valid in a list.
     fun isValidListIndex(index: Int, list: List<Any>): Boolean {
         return (index >= 0 && index < list.size)
+    }
+
+    @Throws(Exception::class)
+    fun load() {
+        locations = serializer.read() as ArrayList<Location>
+    }
+
+    @Throws(Exception::class)
+    fun store() {
+        serializer.write(locations)
     }
 }
