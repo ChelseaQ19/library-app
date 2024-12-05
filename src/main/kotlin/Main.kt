@@ -10,11 +10,12 @@ import ie.setu.utils.readNextInt
 import ie.setu.utils.readNextLine
 import io.github.oshai.kotlinlogging.KotlinLogging
 import ie.setu.persistance.XMLSerializer
+import ie.setu.persistance.JSONSerializer
 import java.io.File
 import java.lang.System.exit
 
 private val logger = KotlinLogging.logger {}
-private val bookAPI = BookAPI(XMLSerializer(File("books.xml")))
+private val bookAPI = BookAPI(JSONSerializer(File("books.json")))
 private val locationAPI = LocationAPI(XMLSerializer(File("locations.xml")))
 private val bookLocationController = BookLocationController(XMLSerializer(File("bookLocations.xml")))
 
