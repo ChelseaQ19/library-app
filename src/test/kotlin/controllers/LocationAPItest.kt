@@ -2,12 +2,14 @@ package controllers
 
 import ie.setu.controllers.LocationAPI
 import ie.setu.models.Location
+import ie.setu.persistance.XMLSerializer
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import java.io.File
 
 class LocationAPITest {
 
@@ -16,8 +18,8 @@ class LocationAPITest {
     private var location3: Location? = null
     private var location4: Location? = null
     private var location5: Location? = null
-    private var populatedLocations: LocationAPI? = LocationAPI()
-    private var emptyLocations: LocationAPI? = LocationAPI()
+    private var populatedLocations: LocationAPI? = LocationAPI(XMLSerializer(File("locations.xml")))
+    private var emptyLocations: LocationAPI? = LocationAPI(XMLSerializer(File("locations.xml")))
 
     @BeforeEach
     fun setup() {

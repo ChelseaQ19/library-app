@@ -3,11 +3,13 @@ package controllers
 import ie.setu.controllers.BookLocationController
 import ie.setu.models.Book
 import ie.setu.models.Location
+import ie.setu.persistance.XMLSerializer
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import java.io.File
 import java.util.Locale
 
 /**
@@ -39,7 +41,7 @@ class BookLocationControllerAPITest {
         location2 = Location(5,2, "Shelf B", 14, false)
 
         //creating controller instances
-        bookLocationController = BookLocationController()
+        bookLocationController = BookLocationController(XMLSerializer(File("bookLocations.xml")))
 
         //add books to locations check
         bookLocationController!!.addBookToLocation(spiritualBook!!.bookId, location1!!.locationId)
