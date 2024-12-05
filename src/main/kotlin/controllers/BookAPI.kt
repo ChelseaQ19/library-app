@@ -1,10 +1,14 @@
 package ie.setu.controllers
 
 import ie.setu.models.Book
+import ie.setu.persistance.Serializer
 
-class BookAPI {
+class BookAPI(serializerType: Serializer) {
 
     private var books = ArrayList<Book>()
+    private val serializer: Serializer = serializerType
+
+
 
     fun add(book: Book): Boolean { //adding a book to our application
         return books.add(book)
@@ -52,8 +56,8 @@ class BookAPI {
 
     fun numberOfArchivedBooks(): Int {
         var counter = 0
-        for (note in books) {
-            if (note.isBookArchived) {
+        for (book in books) {
+            if (book.isBookArchived) {
                 counter++
             }
         }
@@ -62,8 +66,8 @@ class BookAPI {
 
     fun numberOfActiveBooks(): Int {
         var counter = 0
-        for (note in books) {
-            if (!note.isBookArchived) {
+        for (book in books) {
+            if (!book.isBookArchived) {
                 counter++
             }
         }
@@ -90,5 +94,17 @@ class BookAPI {
     fun isValidListIndex(index: Int, list: List<Any>): Boolean {
         return (index >= 0 && index < list.size)
     }
+
+    @Throws(Exception::class)
+    fun load() {
+        books = serializer.read() as ArrayList<Book>
+    }
+
+    @Throws(Exception::class)
+    fun store() {
+        serializer.write(books)
+    }
 }
+
+
 

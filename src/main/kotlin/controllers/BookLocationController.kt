@@ -40,7 +40,6 @@ class BookLocationController {
         }
     }
 
-
     /**
      * Adds a book to a specific location.
      *

@@ -5,15 +5,16 @@ import ie.setu.controllers.LocationAPI
 import ie.setu.controllers.BookLocationController
 import ie.setu.models.Book
 import ie.setu.models.Location
-import ie.setu.models.BookLocation
 import ie.setu.utils.readNextDouble
 import ie.setu.utils.readNextInt
 import ie.setu.utils.readNextLine
 import io.github.oshai.kotlinlogging.KotlinLogging
+import ie.setu.persistance.XMLSerializer
+import java.io.File
 import java.lang.System.exit
 
 private val logger = KotlinLogging.logger {}
-private val bookAPI = BookAPI()
+private val bookAPI = BookAPI(XMLSerializer(File("books.xml")))
 private val locationAPI = LocationAPI()
 private val bookLocationController = BookLocationController()
 
@@ -42,7 +43,9 @@ fun mainMenu() : Int {
     > |   5) Add location              |
     > |   6) List all locations        |
     > |   7) Add books to locations    |
-    > |   8) Find books in location    |        
+    > |   8) Find books in location    |  
+    > |   9) Save books                |
+    > |   10)Load books                |
     > ----------------------------------
     > |   0) Exit                      |
     > ----------------------------------
@@ -65,6 +68,8 @@ fun runMenu() {
             6 -> listLocations()
             7 -> addManyBooksToManyLocations()
             8 -> findBooksInLocation()
+            9 -> save()
+            10 ->load()
             0  -> exitApp()
             else -> println("Invalid option entered: ${option}")
         }
@@ -193,6 +198,22 @@ fun findBooksInLocation() {
         println("Books found in location $locationId: ${bookIds.joinToString(" , ")}")
     } else {
         println("No books found in location $locationId")
+    }
+}
+
+fun save() {
+    try {
+        bookAPI.store()
+    } catch (e: Exception) {
+        System.err.println("Error writing to file: $e")
+    }
+}
+
+fun load() {
+    try {
+        bookAPI.load()
+    } catch (e: Exception) {
+        System.err.println("Error reading from file: $e")
     }
 }
 
