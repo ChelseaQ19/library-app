@@ -158,6 +158,8 @@ fun countBooksByGenre() {
     println("There are $count books in the genre '$genre'.")
 }
 
+fun searchBookByTitle
+
 fun bookSubMenu() {
     if (bookAPI.numberOfBooks() > 0) {
         val option = readNextInt(
@@ -167,14 +169,14 @@ fun bookSubMenu() {
                 > --------------------------------
                 > |   1) List all books          |
                 > |   2) Count books by genre    |
-                > |   3) View books by language  |
+                > |   3) Search book by title    | 
                 > --------------------------------
                 > ==>> """.trimMargin(">"))
 
         when (option) {
             1 -> listBooks()
             2 -> countBooksByGenre()
-            //3 -> viewBooksByLanguage() // Placeholder for a new function
+            3 -> searchBookByTitle()
             else -> println("Invalid option entered: $option")
         }
     } else {

@@ -76,6 +76,15 @@ class BookAPI(serializerType: Serializer) {
             .toInt()
     }
 
+    fun searchByTitle(title: String): String {
+        return books
+            .filter { book -> book.bookTitle.contains(title, ignoreCase = true) }
+            .joinToString(separator = "\n") {
+                val index = books.indexOf(it)
+                "$index: ${it.bookTitle} by ${it.bookAuthor}"
+            }
+    }
+
     fun numberOfActiveBooks(): Int {
         var counter = 0
         for (book in books) {
