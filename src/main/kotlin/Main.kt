@@ -146,8 +146,10 @@ fun deleteBook(){
 }
 
 /**
- * Asks the user to input the genre they want to search for
- * Calls the [countBooksByGenre] method to get the count of books in that genre
+ * Searches for books based on the title provided by the user.
+ * Prompts the user to enter a book title and search for all books
+ * Whose title contains the string.
+ * If the book(s) are found, it will display the index and details [title and author] of each book.
  * Displays the result to the user.
  */
 fun countBooksByGenre() {
@@ -157,7 +159,11 @@ fun countBooksByGenre() {
 
     println("There are $count books in the genre '$genre'.")
 }
-
+/**
+ * Asks the user to input the genre they want to search for
+ * Calls the [countBooksByGenre] method to get the count of books in that genre
+ * Displays the result to the user.
+ */
 fun searchBookByTitle() {
     val title = readNextLine("Enter the title to search for: ")
     val result = bookAPI.searchByTitle(title)
