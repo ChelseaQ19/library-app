@@ -145,6 +145,19 @@ fun deleteBook(){
     }
 }
 
+/**
+ * Asks the user to input the genre they want to search for
+ * Calls the [countBooksByGenre] method to get the count of books in that genre
+ * Displays the result to the user.
+ */
+fun countBooksByGenre() {
+    val genre = readNextLine("Enter the genre to count books for: ")
+
+    val count = bookAPI.countBooksByGenre(genre)
+
+    println("There are $count books in the genre '$genre'.")
+}
+
 fun bookSubMenu() {
     if (bookAPI.numberOfBooks() > 0) {
         val option = readNextInt(
@@ -160,7 +173,7 @@ fun bookSubMenu() {
 
         when (option) {
             1 -> listBooks()
-            //2 -> countBooksByGenreInMenu()
+            2 -> countBooksByGenre()
             //3 -> viewBooksByLanguage() // Placeholder for a new function
             else -> println("Invalid option entered: $option")
         }
