@@ -22,6 +22,9 @@ dependencies {
     implementation("com.github.ajalt.mordant:mordant-coroutines:3.0.1")
     // optional widget for rendering Markdown
     implementation("com.github.ajalt.mordant:mordant-markdown:3.0.1")
+    //For Streaming to XML and JSON
+    implementation("com.thoughtworks.xstream:xstream:1.4.18")
+    implementation("org.codehaus.jettison:jettison:1.4.1")
 }
 
 tasks.test {

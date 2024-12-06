@@ -5,17 +5,19 @@ import ie.setu.controllers.LocationAPI
 import ie.setu.controllers.BookLocationController
 import ie.setu.models.Book
 import ie.setu.models.Location
-import ie.setu.models.BookLocation
 import ie.setu.utils.readNextDouble
 import ie.setu.utils.readNextInt
 import ie.setu.utils.readNextLine
 import io.github.oshai.kotlinlogging.KotlinLogging
+import ie.setu.persistance.XMLSerializer
+import ie.setu.persistance.JSONSerializer
+import java.io.File
 import java.lang.System.exit
 
 private val logger = KotlinLogging.logger {}
-private val bookAPI = BookAPI()
-private val locationAPI = LocationAPI()
-private val bookLocationController = BookLocationController()
+private val bookAPI = BookAPI(JSONSerializer(File("books.json")))
+private val locationAPI = LocationAPI(JSONSerializer(File("locations.json")))
+private val bookLocationController = BookLocationController(JSONSerializer(File("bookLocations.json")))
 
 /**
  * Starting point for the library management application.
@@ -42,7 +44,13 @@ fun mainMenu() : Int {
     > |   5) Add location              |
     > |   6) List all locations        |
     > |   7) Add books to locations    |
-    > |   8) Find books in location    |        
+    > |   8) Find books in location    |  
+    > |   9) Save books                |
+    > |   10)Load books                |
+    > |   11)Save locations            |
+    > |   12)Load locations            |
+    > |   13)Save books in locations   |
+    > |   12)Load books in locations   |
     > ----------------------------------
     > |   0) Exit                      |
     > ----------------------------------
@@ -65,6 +73,12 @@ fun runMenu() {
             6 -> listLocations()
             7 -> addManyBooksToManyLocations()
             8 -> findBooksInLocation()
+            9 -> save()
+            10 ->load()
+            11 ->saveLocations()
+            12 ->loadLocations()
+            13 ->saveBookLocations()
+            14 ->loadBookLocations()
             0  -> exitApp()
             else -> println("Invalid option entered: ${option}")
         }
@@ -132,7 +146,7 @@ fun deleteBook(){
 fun addLocation(){
     val locationId = readNextInt("Enter the ID of the book location: ")
     val locationAisle = readNextInt("Enter the aisle number of the book location: ")
-    val locationShelf = readNextLine("Enter the shelf number of the book location:")
+    val locationShelf = readNextLine("Enter the shelf of the book location:")
     val locationIndex = readNextInt("Enter the index number of the book location:")
     val isAdded = locationAPI.add(Location(locationId,locationAisle, locationShelf, locationIndex, false))
 
@@ -193,6 +207,54 @@ fun findBooksInLocation() {
         println("Books found in location $locationId: ${bookIds.joinToString(" , ")}")
     } else {
         println("No books found in location $locationId")
+    }
+}
+
+fun save() {
+    try {
+        bookAPI.store()
+    } catch (e: Exception) {
+        System.err.println("Error writing to file: $e")
+    }
+}
+
+fun load() {
+    try {
+        bookAPI.load()
+    } catch (e: Exception) {
+        System.err.println("Error reading from file: $e")
+    }
+}
+
+fun saveLocations() {
+    try {
+        locationAPI.store()
+    } catch (e: Exception) {
+        System.err.println("Error writing to file: $e")
+    }
+}
+
+fun loadLocations() {
+    try {
+        locationAPI.load()
+    } catch (e: Exception) {
+        System.err.println("Error reading from file: $e")
+    }
+}
+
+fun saveBookLocations() {
+    try {
+        bookLocationController.store()
+    } catch (e: Exception) {
+        System.err.println("Error writing to file: $e")
+    }
+}
+
+fun loadBookLocations() {
+    try {
+       bookLocationController.load()
+    } catch (e: Exception) {
+        System.err.println("Error reading from file: $e")
     }
 }
 
