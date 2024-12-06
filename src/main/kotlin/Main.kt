@@ -38,19 +38,21 @@ fun mainMenu() : Int {
     > ----------------------------------
     > | LIBRARY MENU                   |
     > |   1) Add a book                |
-    > |   2) List all books            |
-    > |   3) Update a book             |
-    > |   4) Delete a book             |
+    > |   2) Update a book             |
+    > |   3) Delete a book             |
+    > |   4) Books Submenu             |
+    > ----------------------------------
     > |   5) Add location              |
     > |   6) List all locations        |
     > |   7) Add books to locations    |
     > |   8) Find books in location    |  
+    > ----------------------------------
     > |   9) Save books                |
     > |   10)Load books                |
     > |   11)Save locations            |
     > |   12)Load locations            |
     > |   13)Save books in locations   |
-    > |   12)Load books in locations   |
+    > |   14)Load books in locations   |
     > ----------------------------------
     > |   0) Exit                      |
     > ----------------------------------
@@ -66,9 +68,9 @@ fun runMenu() {
         val option = mainMenu()
         when (option) {
             1  -> addBook()
-            2  -> listBooks()
-            3  -> updateBook()
-            4  -> deleteBook()
+            2  -> updateBook()
+            3  -> deleteBook()
+            4  -> bookSubMenu()
             5  -> addLocation()
             6 -> listLocations()
             7 -> addManyBooksToManyLocations()
@@ -140,6 +142,30 @@ fun deleteBook(){
         } else {
             println("Delete NOT Successful")
         }
+    }
+}
+
+fun bookSubMenu() {
+    if (bookAPI.numberOfBooks() > 0) {
+        val option = readNextInt(
+            """
+                > --------------------------------
+                > |   BOOK SUBMENU               |
+                > --------------------------------
+                > |   1) List all books          |
+                > |   2) Count books by genre    |
+                > |   3) View books by language  |
+                > --------------------------------
+                > ==>> """.trimMargin(">"))
+
+        when (option) {
+            1 -> listBooks()
+            //2 -> countBooksByGenreInMenu()
+            //3 -> viewBooksByLanguage() // Placeholder for a new function
+            else -> println("Invalid option entered: $option")
+        }
+    } else {
+        println("No books stored yet.")
     }
 }
 
