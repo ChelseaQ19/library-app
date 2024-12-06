@@ -158,7 +158,12 @@ fun countBooksByGenre() {
     println("There are $count books in the genre '$genre'.")
 }
 
-fun searchBookByTitle
+fun searchBookByTitle() {
+    val title = readNextLine("Enter the title to search for: ")
+    val result = bookAPI.searchByTitle(title)
+
+    println(result)
+}
 
 fun bookSubMenu() {
     if (bookAPI.numberOfBooks() > 0) {
