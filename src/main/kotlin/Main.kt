@@ -17,7 +17,7 @@ import java.lang.System.exit
 private val logger = KotlinLogging.logger {}
 private val bookAPI = BookAPI(JSONSerializer(File("books.json")))
 private val locationAPI = LocationAPI(JSONSerializer(File("locations.json")))
-private val bookLocationController = BookLocationController(XMLSerializer(File("bookLocations.xml")))
+private val bookLocationController = BookLocationController(JSONSerializer(File("bookLocations.json")))
 
 /**
  * Starting point for the library management application.

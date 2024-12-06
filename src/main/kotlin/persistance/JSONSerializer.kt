@@ -4,6 +4,7 @@ import com.thoughtworks.xstream.XStream
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver
 import ie.setu.models.Book
 import ie.setu.models.Location
+import ie.setu.models.BookLocation
 import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
@@ -12,7 +13,7 @@ class JSONSerializer(private val file: File) : Serializer {
     @Throws(Exception::class)
     override fun read(): Any {
         val xStream = XStream(JettisonMappedXmlDriver())
-        xStream.allowTypes(arrayOf(Book::class.java,Location::class.java))
+        xStream.allowTypes(arrayOf(Book::class.java,Location::class.java,BookLocation::class.java))
         val inputStream = xStream.createObjectInputStream(FileReader(file))
         val obj = inputStream.readObject() as Any
         inputStream.close()
