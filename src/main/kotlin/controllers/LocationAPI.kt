@@ -1,45 +1,15 @@
 package ie.setu.controllers
 
-
-import ie.setu.models.Book
 import ie.setu.models.Location
-import ie.setu.models.BookLocation
 import ie.setu.persistance.Serializer
 
 class LocationAPI(serializerType: Serializer)  {
 
     private var locations = ArrayList<Location>()
-    private var bookLocations = ArrayList<BookLocation>()
     private val serializer: Serializer = serializerType
 
     fun add(location: Location): Boolean { //adding a book to our application
         return locations.add(location)
-    }
-
-    /**
-     * Adds multiple books to multiple locations in the library.
-     * This method takes two lists: one for book IDs and one for location IDs.
-     * It loops through both lists and associates each book with each location,
-     * creating a new BookLocation entry for each combination.
-     *
-     * @param bookIds a list of book IDs to be added to locations.
-     * @param locationIds a list of location IDs where books will be added.
-     * @return true if the books were successfully added to the locations.
-     */
-    fun addBookToLocation(bookIds: List<Int>, locationIds: List<Int>) {
-
-        for (locationId in locationIds) {
-
-
-            for (bookId in bookIds) {
-
-
-                val bookLocation = BookLocation(bookId, locationId)
-
-                bookLocations.add(bookLocation)
-
-            }
-        }
     }
 
     fun listAllLocations(): String { //lists all books that are stored in the books list.
