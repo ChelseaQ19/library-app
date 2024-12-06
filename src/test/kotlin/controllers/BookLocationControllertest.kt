@@ -4,6 +4,7 @@ import ie.setu.controllers.BookLocationController
 import ie.setu.models.Book
 import ie.setu.models.Location
 import ie.setu.persistance.XMLSerializer
+import ie.setu.persistance.JSONSerializer
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -145,6 +146,35 @@ class BookLocationControllerAPITest {
             }
         }
 
+        @Test
+        fun `saving and loading an empty collection in JSON doesn't crash app`() {
+
+            val storingBookLocations =BookLocationController(JSONSerializer(File("bookLocation.json")))
+            storingBookLocations.store()
+
+
+            val loadedBookLocations = BookLocationController(JSONSerializer(File("bookLocation.json")))
+            loadedBookLocations.load()
+
+        }
+
+        @Test
+        fun `saving and loading an loaded collection in JSON doesn't loose data`() {
+
+            val storingBookLocations = BookLocationController(JSONSerializer(File("bookLocations.json")))
+            storingBookLocations.addBookToLocation(spiritualBook!!.bookId, location1!!.locationId)
+            storingBookLocations.addBookToLocation(crimeBook!!.bookId, location2!!.locationId)
+            storingBookLocations.store()
+
+
+            val loadedBookLocations = BookLocationController(JSONSerializer(File("bookLocations.json")))
+            loadedBookLocations.load()
+
+            assertTrue(loadedBookLocations.findBooksInLocation(location1!!.locationId).contains(spiritualBook!!.bookId))
+            assertTrue(loadedBookLocations.findBooksInLocation(location2!!.locationId).contains(crimeBook!!.bookId))
+
+        }
     }
+
 }
 
