@@ -64,6 +64,27 @@ class BookAPI(serializerType: Serializer) {
         return counter
     }
 
+    /**
+     *Lambdas replaces the loop and the manual counter, so the code is more simple.
+     * Processes only the books that match the genre directly.
+     */
+    fun countBooksByGenre(genre: String): Int {
+        var counter = 0
+        return books.stream()
+            .filter { book -> book.bookGenre == genre }
+            .count()
+            .toInt()
+    }
+
+    fun searchByTitle(title: String): String {
+        return books
+            .filter { book -> book.bookTitle.contains(title, ignoreCase = true) }
+            .joinToString(separator = "\n") {
+                val index = books.indexOf(it)
+                "$index: ${it.bookTitle} by ${it.bookAuthor}"
+            }
+    }
+
     fun numberOfActiveBooks(): Int {
         var counter = 0
         for (book in books) {

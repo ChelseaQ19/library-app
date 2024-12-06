@@ -38,19 +38,21 @@ fun mainMenu() : Int {
     > ----------------------------------
     > | LIBRARY MENU                   |
     > |   1) Add a book                |
-    > |   2) List all books            |
-    > |   3) Update a book             |
-    > |   4) Delete a book             |
+    > |   2) Update a book             |
+    > |   3) Delete a book             |
+    > |   4) Books Submenu             |
+    > ----------------------------------
     > |   5) Add location              |
     > |   6) List all locations        |
     > |   7) Add books to locations    |
     > |   8) Find books in location    |  
+    > ----------------------------------
     > |   9) Save books                |
     > |   10)Load books                |
     > |   11)Save locations            |
     > |   12)Load locations            |
     > |   13)Save books in locations   |
-    > |   12)Load books in locations   |
+    > |   14)Load books in locations   |
     > ----------------------------------
     > |   0) Exit                      |
     > ----------------------------------
@@ -66,9 +68,9 @@ fun runMenu() {
         val option = mainMenu()
         when (option) {
             1  -> addBook()
-            2  -> listBooks()
-            3  -> updateBook()
-            4  -> deleteBook()
+            2  -> updateBook()
+            3  -> deleteBook()
+            4  -> bookSubMenu()
             5  -> addLocation()
             6 -> listLocations()
             7 -> addManyBooksToManyLocations()
@@ -140,6 +142,56 @@ fun deleteBook(){
         } else {
             println("Delete NOT Successful")
         }
+    }
+}
+
+/**
+ * Searches for books based on the title provided by the user.
+ * Prompts the user to enter a book title and search for all books
+ * Whose title contains the string.
+ * If the book(s) are found, it will display the index and details [title and author] of each book.
+ * Displays the result to the user.
+ */
+fun countBooksByGenre() {
+    val genre = readNextLine("Enter the genre to count books for: ")
+
+    val count = bookAPI.countBooksByGenre(genre)
+
+    println("There are $count books in the genre '$genre'.")
+}
+/**
+ * Asks the user to input the genre they want to search for
+ * Calls the [countBooksByGenre] method to get the count of books in that genre
+ * Displays the result to the user.
+ */
+fun searchBookByTitle() {
+    val title = readNextLine("Enter the title to search for: ")
+    val result = bookAPI.searchByTitle(title)
+
+    println(result)
+}
+
+fun bookSubMenu() {
+    if (bookAPI.numberOfBooks() > 0) {
+        val option = readNextInt(
+            """
+                > --------------------------------
+                > |   BOOK SUBMENU               |
+                > --------------------------------
+                > |   1) List all books          |
+                > |   2) Count books by genre    |
+                > |   3) Search book by title    | 
+                > --------------------------------
+                > ==>> """.trimMargin(">"))
+
+        when (option) {
+            1 -> listBooks()
+            2 -> countBooksByGenre()
+            3 -> searchBookByTitle()
+            else -> println("Invalid option entered: $option")
+        }
+    } else {
+        println("No books stored yet.")
     }
 }
 

@@ -132,6 +132,31 @@ class BookAPITest {
     }
 
     @Nested
+    inner class CountBooks {
+
+        @Test
+        fun `countBookByGenre returns no books to count when ArrayList is empty`() {
+            assertEquals(0, emptyBooks!!.countBooksByGenre("Sci-Fi"))
+            assertEquals(0, emptyBooks!!.countBooksByGenre("Mystery"))
+
+        }
+
+        @Test
+        fun `countBookByGenre returns correct count for a given genre when books are stored`() {
+            assertEquals(1, populatedBooks!!.countBooksByGenre("Sci-Fi"))
+            assertEquals(1, populatedBooks!!.countBooksByGenre("Biography"))
+            assertEquals(1, populatedBooks!!.countBooksByGenre("Mystery"))
+        }
+
+        @Test
+        fun `countBookByGenre returns empty for genres that are not in the list `() {
+            assertEquals(0, emptyBooks!!.countBooksByGenre("Romance"))
+            assertEquals(0, emptyBooks!!.countBooksByGenre("Horror"))
+
+        }
+    }
+
+    @Nested
     inner class PersistenceTests {
 
         @Test
