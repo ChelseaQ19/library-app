@@ -161,7 +161,7 @@ fun countBooksByGenre() {
 }
 /**
  * Asks the user to input the genre they want to search for
- * Calls the [countBooksByGenre] method to get the count of books in that genre
+ * Calls the [countBooksByGenre] method to get the count of books in that genre.
  * Displays the result to the user.
  */
 fun searchBookByTitle() {

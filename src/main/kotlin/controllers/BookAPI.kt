@@ -10,11 +10,11 @@ class BookAPI(serializerType: Serializer) {
 
 
 
-    fun add(book: Book): Boolean { //adding a book to our application
+    fun add(book: Book): Boolean {
         return books.add(book)
     }
 
-    fun listAllBooks(): String { //lists all books that are stored in the books list.
+    fun listAllBooks(): String {
         return if (books.isEmpty()) {
             "No books stored"
         } else {
@@ -65,8 +65,9 @@ class BookAPI(serializerType: Serializer) {
     }
 
     /**
-     *Lambdas replaces the loop and the manual counter, so the code is more simple.
+     * Lambdas replaces the loop and the manual counter, so the code is more simple.
      * Processes only the books that match the genre directly.
+     * Similar coding to the notes counter, adding the genre property from [BookAPI].
      */
     fun countBooksByGenre(genre: String): Int {
         var counter = 0
@@ -75,6 +76,12 @@ class BookAPI(serializerType: Serializer) {
             .count()
             .toInt()
     }
+
+    /**
+     * Lambdas replaces the loop and the manual search, so the code is more simple.
+     * Processes only the books that match the title directly.
+     * Similar coding to the notes counter, adding the title property from [BookAPI].
+     */
 
     fun searchByTitle(title: String): String {
         return books
