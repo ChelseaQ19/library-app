@@ -4,11 +4,12 @@ import ie.setu.models.BookLocation
 import ie.setu.models.Location
 import ie.setu.persistance.Serializer
 
-/**
- * This class manages the relationship between book and location.
- * This will act as a helper to add books to specific locations.
- */
+   /**
+    * This class manages the relationship between book and location.
+    * This will act as a helper to add books to specific locations.
+    */
 class BookLocationController(serializerType: Serializer)  {
+
     /**
      * List that holds book-location pairs. Allows you to add, update and list items.
      */
@@ -35,7 +36,6 @@ class BookLocationController(serializerType: Serializer)  {
      * 'bookLocations.add(BookLocation(bookId, locationId))' combines the book and location,adding them together.
      */
     fun addManyBooksToManyLocations(bookIds: List<Int>, locationIds: List<Int>) {
-        //loops through both lists and adds each book-location combination.
         for (bookId in bookIds) {
             for (locationId in locationIds) {
                 bookLocations.add(BookLocation(bookId, locationId))
